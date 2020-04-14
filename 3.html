@@ -1,0 +1,547 @@
+<html>
+<head>
+<title>Computer Crimes</title>
+</head>
+<body bgcolor = "black">
+
+
+
+
+
+
+
+
+
+<script>
+// Set the number of snowflakes (more than 30 - 40 not recommended)
+var snowmax=128
+
+// Set the colors for the snow. Add as many colors as you like
+var snowcolor=new Array("green","blue","red","aqua","black","lime","purple","maroon")
+
+// Set the fonts, that create the snowflakes. Add as many fonts as you like
+var snowtype=new Array("Georgia","Jokerman","Algerian","Elephant")
+
+// Set the letter that creates your snowflake (recommended:*)
+var snowletter="*"
+
+// Set the speed of sinking (recommended values range from 0.3 to 2)
+var sinkspeed=1.6
+
+// Set the maximal-size of your snowflaxes
+var snowmaxsize=16
+
+// Set the minimal-size of your snowflaxes
+var snowminsize=8
+
+// Set the snowing-zone
+// Set 1 for all-over-snowing, set 2 for left-side-snowing 
+// Set 3 for center-snowing, set 4 for right-side-snowing
+var snowingzone=1
+
+///////////////////////////////////////////////////////////////////////////
+// CONFIGURATION ENDS HERE
+///////////////////////////////////////////////////////////////////////////
+
+
+// Do not edit below this line
+var snow=new Array()
+var marginbottom
+var marginright
+var timer
+var i_snow=0
+var x_mv=new Array();
+var crds=new Array();
+var lftrght=new Array();
+var browserinfos=navigator.userAgent 
+var ie5=document.all&&document.getElementById&&!browserinfos.match(/Opera/)
+var ns6=document.getElementById&&!document.all
+var opera=browserinfos.match(/Opera/)  
+var browserok=ie5||ns6||opera
+
+function randommaker(range) {		
+	rand=Math.floor(range*Math.random())
+    return rand
+}
+
+function initsnow() {
+	if (ie5 || opera) {
+		marginbottom = document.body.clientHeight
+		marginright = document.body.clientWidth
+	}
+	else if (ns6) {
+		marginbottom = window.innerHeight
+		marginright = window.innerWidth
+	}
+	var snowsizerange=snowmaxsize-snowminsize
+	for (i=0;i<=snowmax;i++) {
+		crds[i] = 0;                      
+    	lftrght[i] = Math.random()*15;         
+    	x_mv[i] = 0.03 + Math.random()/10;
+		snow[i]=document.getElementById("s"+i)
+		snow[i].style.fontFamily=snowtype[randommaker(snowtype.length)]
+		snow[i].size=randommaker(snowsizerange)+snowminsize
+		snow[i].style.fontSize=snow[i].size
+		snow[i].style.color=snowcolor[randommaker(snowcolor.length)]
+		snow[i].sink=sinkspeed*snow[i].size/5
+		if (snowingzone==1) {snow[i].posx=randommaker(marginright-snow[i].size)}
+		if (snowingzone==2) {snow[i].posx=randommaker(marginright/2-snow[i].size)}
+		if (snowingzone==3) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/4}
+		if (snowingzone==4) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/2}
+		snow[i].posy=randommaker(2*marginbottom-marginbottom-2*snow[i].size)
+		snow[i].style.left=snow[i].posx
+		snow[i].style.top=snow[i].posy
+	}
+	movesnow()
+}
+
+function movesnow() {
+	for (i=0;i<=snowmax;i++) {
+		crds[i] += x_mv[i];
+		snow[i].posy+=snow[i].sink
+		snow[i].style.left=snow[i].posx+lftrght[i]*Math.sin(crds[i]);
+		snow[i].style.top=snow[i].posy
+		
+		if (snow[i].posy>=marginbottom-2*snow[i].size || parseInt(snow[i].style.left)>(marginright-3*lftrght[i])){
+			if (snowingzone==1) {snow[i].posx=randommaker(marginright-snow[i].size)}
+			if (snowingzone==2) {snow[i].posx=randommaker(marginright/2-snow[i].size)}
+			if (snowingzone==3) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/4}
+			if (snowingzone==4) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/2}
+			snow[i].posy=0
+		}
+	}
+	var timer=setTimeout("movesnow()",50)
+}
+
+for (i=0;i<=snowmax;i++) {
+	document.write("<span id='s"+i+"' style='position:absolute;top:-"+snowmaxsize+"'>"+snowletter+"</span>")
+}
+if (browserok) {
+	window.onload=initsnow
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<SCRIPT LANGUAGE="JavaScript">
+<!-- Begin
+var no = 50;
+var speed = 1;
+var ns4up = (document.layers) ? 1 : 0;
+var ie4up = (document.all) ? 1 : 0;
+var s, x, y, sn, cs;
+var a, r, cx, cy;
+var i, doc_width = 800, doc_height = 600;
+if (ns4up) {
+doc_width = self.innerWidth;
+doc_height = self.innerHeight;
+}
+else
+if (ie4up) {
+doc_width = document.body.clientWidth;
+doc_height = document.body.clientHeight;
+}
+x = new Array();
+y = new Array();
+r = new Array();
+cx = new Array();
+cy = new Array();
+s = 8;
+for (i = 0; i < no; ++ i) {
+initRain();
+if (ns4up) {
+if (i == 0) {
+document.write("<layer name=\"dot"+ i +"\" left=\"1\" ");
+document.write("top=\"1\" visibility=\"show\"><font color=\"blue\">");
+document.write(",</font></layer>");
+}
+else {
+document.write("<layer name=\"dot"+ i +"\" left=\"1\" ");
+document.write("top=\"1\" visibility=\"show\"><font color=\"blue\">");
+document.write(",</font></layer>");
+   }
+}
+else
+if (ie4up) {
+if (i == 0) {
+document.write("<div id=\"dot"+ i +"\" style=\"POSITION: ");
+document.write("absolute; Z-INDEX: "+ i +"; VISIBILITY: ");
+document.write("visible; TOP: 15px; LEFT: 15px;\"><font color=\"blue\">");
+document.write(",</font></div>");
+}
+else {
+document.write("<div id=\"dot"+ i +"\" style=\"POSITION: ");
+document.write("absolute; Z-INDEX: "+ i +"; VISIBILITY: ");
+document.write("visible; TOP: 15px; LEFT: 15px;\"><font color=\"blue\">");
+document.write(",</font></div>");
+      }
+   }
+}
+function initRain() {
+a = 6;
+r[i] = 1;
+sn = Math.sin(a);
+cs = Math.cos(a);
+cx[i] = Math.random() * doc_width + 1;
+cy[i] = Math.random() * doc_height + 1;
+x[i] = r[i] * sn + cx[i];
+y[i] = cy[i];
+}
+function makeRain() {
+r[i] = 1;
+cx[i] = Math.random() * doc_width + 1;
+cy[i] = 1;
+x[i] = r[i] * sn + cx[i];
+y[i] = r[i] * cs + cy[i];
+}
+function updateRain() {
+r[i] += s;
+x[i] = r[i] * sn + cx[i];
+y[i] = r[i] * cs + cy[i];
+}
+function raindropNS() {
+for (i = 0; i < no; ++ i) {
+updateRain();
+if ((x[i] <= 1) || (x[i] >= (doc_width - 20)) || (y[i] >= (doc_height - 20))) {
+makeRain();
+doc_width = self.innerWidth;
+doc_height = self.innerHeight;
+}
+document.layers["dot"+i].top = y[i];
+document.layers["dot"+i].left = x[i];
+}
+setTimeout("raindropNS()", speed);
+}
+function raindropIE() {
+for (i = 0; i < no; ++ i) {
+updateRain();
+if ((x[i] <= 1) || (x[i] >= (doc_width - 20)) || (y[i] >= (doc_height - 20))) {
+makeRain();
+doc_width = document.body.clientWidth;
+doc_height = document.body.clientHeight;
+}
+document.all["dot"+i].style.pixelTop = y[i];
+document.all["dot"+i].style.pixelLeft = x[i];
+}
+setTimeout("raindropIE()", speed);
+}
+if (ns4up) {
+raindropNS();
+}
+else
+if (ie4up) {
+raindropIE();
+}
+//  End -->
+</script>
+
+
+
+
+
+
+
+
+
+<font face = "Georgia" color = "white" size = "5">
+Other can infect the system when we copy a file from an infected disk,or when we try to erase an infected disk.Sometimes,
+<br / >when we are downloading a file from the Internet or accessing data or programs on a network , viruses can invede 
+<br / >our computer system.The chances of  virus infection is reduced if we install genuine software and do not exchage 
+<br / >disks with others.
+<p>Once a virus invades the system , it tries to remain hidden and corrupt the operating system . It also tries to locate
+<br / >other computers within a network , and attack them . The virus continuously tries to infect as many systems as
+<br / >possible in one go . A virus generally infects computer in a network by attachingcopies of itself to the computers . 
+<br / >Some viruses are programmed to strike at a present date and time . Each time the host program is executed at a
+<br  / >particular date or time , the virus replicates itself and thus destorying it . 
+</font>
+
+<br / >
+<br / >
+<FONT FACE = "Imprint MT Shadow" COLOR = "lime" SIZE = "6">
+<B>
+<u>TYPES OF VIRUSES</u>
+</b>
+</font>
+<br / >
+<br / >
+<font face = "Georgia" color = "white" size = "5">
+Some special categories of viruses include the following:
+</font>
+<br / >
+<br / >
+<font face = "Georgia" color = "blue" size = "5">
+<b>
+<u>Boot Sector Virus: 
+</u>
+</b>
+</font>
+<font face = "Georgia" color = "white" size = "5">
+It occupies the boot sector of a disk and gets loaded into the memory during the boot-up process . Once 
+<br / >in the memory it attempts to infect the boot sector of any disk that is inserted in the computer system . 
+</font>
+<font face = "Georgia" color = "yellow" size = "5">
+<center>
+<u>Examples :- </u>Quox , Danish , PC Stone & Joshi</font>
+</center>
+<br / >
+<br / >
+<font face = "Georgia" color = "blue" size = "5">
+<b>
+<u>Cluster Virus:
+</u>
+</b>
+</font>
+<font face = "Georgia" color = "white" size = "5">
+It makes changes to a disk's file system . If any program is run from the infected disk then , the
+<br / >virus gets activated as well . 
+</font>
+<br / >
+<br / >
+<font face = "Georgia" color = "blue" size = "5">
+<b>
+<u>File Infecting Virus:
+</u>
+</b>
+</font>
+<font face = "Georgia" color = "white" size = "5">
+This type of virus infects program files like" .EXE , .DLL " on the disk . 
+</font>
+<br / >
+<br / >
+<font face = "Georgia" color = "blue" size = "5">
+<b>
+<u>Stealth Virus :
+</u>
+</b>
+</font>
+<font face = "Georgia" color = "white" size = "5">
+This virus attempts t hide its presence . Some even prevent anti - virus softwares from
+<br / >reading the part of the file or disk , where the virus is located . 
+</font>
+<font face = "Georgia" color = "yellow" size = "5">
+<center>
+<u>Examples :-</u>Frodo & E-Brain
+</center>
+</font>
+<br / >
+<br / >
+<font face = "Georgia" color = "blue" size = "5">
+<b>
+<u>Worms:
+</u>
+</b>
+</font>
+<font face = "Georgia" color = "white" size = "5">
+Worms are types of viruses that can replicate independently among themselves and are often designed
+<br / >to read the computer user's contact e-mail list from Outlook Express etc , and then e-mail themselves to every 
+<br / >address within that list . As worms are very destructive they copy themselves from computer to computer.</font>
+<font face = "Georgia" color = "yellow" size = "5">
+<center>
+<u>Examples:-</u>Scalper & Swen</center>
+</font>
+<br / >
+<br / >
+<font face = "Georgia" color = "blue" size = "5">
+<b>
+<u>Multipartite Virus :
+</u>
+</b>
+</font>
+<font face = "Georgia" color = "white" size = "5">
+This virus infects the boot sector of disks as well as application program .  
+</font>
+<br / >
+<br / >
+<font face = "Georgia" color = "blue" size = "5">
+<b>
+<u>Trojan Horse:
+</u>
+</b>
+</font>
+<font face = "Georgia" color = "white" size = "5">
+Although technically not a virus , the Trojan Horse poses a great threat to our computer system's
+<br / >privacy . It gets installed without the user's knowledge i.e , if once installed it begins to log every key pressed on
+<br / >the keyboard and saves it on a log file . When the user gets connected to the internet the virus e-mails the log file 
+<br / >to the hacker without the user's knowledge . The key log file may contain credut card numbers , personal 
+<br / >information , or network or e-mail passwords . That is why they are called 'Password Sniffers ' .
+</font>
+<font face = "Georgia" color = "yellow" size = "5">
+<center>
+<u>Examples :-</u>Backdoor , W32.Azak & Nuker</center>
+</font>
+<br / >
+<br / >
+<font face = "Georgia" color = "blue" size = "5">
+<b>
+<u>
+</u>Macro Virus :
+</b>
+</font>
+<font face = "Georgia" color = "white" size = "5">
+A macro virus is written in a programming language inside another document such as word processor
+<br / >document or a spreadsheet document . Microsoft office applications are targeted most often , but any application
+<br / >that contains a complex macro language can be used to write such a virus . 
+</font>
+<font face = "Georgia" color = "yellow" size = "5">
+<center>
+<u>Examples:-</u> WM Consep. A & Blood Hound </center>
+</font>
+<br / >
+<br / >
+
+
+
+
+
+
+
+<TABLE>
+<TR>
+<TD>
+<B>
+<FONT FACE = "BELL MT" SIZE = "8" COLOR = "YELLOW">
+GOTO PAGE -->>
+<CELLSPACING = "4" / >
+</FONT>
+<A HREF = "1.HTML" COLOR = "YELLOW">
+<FONT FACE = "Castellar" SIZE = "16" COLOR = "AQUA">
+1
+</FONT>
+</A>
+
+<CELLSPACING = "4" / >
+
+
+
+<A HREF = "2.HTML">
+<FONT FACE = "Castellar" SIZE = "16" COLOR = "lime">
+2
+</FONT>
+</A>
+
+<CELLSPACING = "4" / >
+
+<A HREF = "4.HTML">
+<FONT FACE = "Castellar" SIZE = "16" COLOR = "MAGNETA">
+4
+</FONT>
+</A>
+
+<CELLSPACING = "4" / >
+
+
+<A HREF = "5.HTML">
+<FONT FACE = "Castellar" SIZE = "16" COLOR = "AQUA">
+5
+</FONT>
+</A>
+
+<CELLSPACING = "4" / >
+
+<A HREF = "6.HTML">
+<FONT FACE = "Castellar" SIZE = "16" COLOR = "lime">
+6
+</FONT>
+</A>
+
+<CELLSPACING = "4" / >
+
+<A HREF = "7.HTML">
+<FONT FACE = "Castellar" SIZE = "16" COLOR = "MAGNETA">
+7
+</FONT>
+</A>
+
+<CELLSPACING = "4" / >
+
+<A HREF = "8.HTML">
+<FONT FACE = "Castellar" SIZE = "16" COLOR = "YELLOW">
+8
+</FONT>
+</A>
+<CELLPADDING = "20" / >
+<FONT FACE = "BELL MT" SIZE = "8" COLOR = "YELLOW">
+<<-- GOTO PAGE
+</FONT>
+</B>
+
+</TD>
+</TR>
+</TABLE>
+
+
+
+
+
+<CENTER>
+<FONT FACE = "ALGERIAN" SIZE = "8" COLOR = "RED">
+PAGE 3 OF 8
+</FONT>
+</CENTER>
+<center>
+<table>
+<tr>
+<td>
+
+<A HREF = "2.HTML">
+<FONT FACE = "ALGERIAN" SIZE = "8" COLOR = "RED" >
+< PREVIOUS
+</FONT>
+</A>
+
+<A HREF = "4.HTML" >
+<FONT FACE = "ALGERIAN" SIZE = "8" COLOR = "RED" >
+NEXT >
+</FONT>
+</A>
+</TD>
+</TR>
+</TABLE>
+</center>
+
+
+
+
+</body>
+</html>
