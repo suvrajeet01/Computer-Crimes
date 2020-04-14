@@ -1,0 +1,512 @@
+<HTML>
+<HEAD>
+<TITLE>Computer Crimes</TITLE>
+</HEAD>
+<BODY BGCOLOR = "BLACK">
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Set the number of snowflakes (more than 30 - 40 not recommended)
+var snowmax=128
+
+// Set the colors for the snow. Add as many colors as you like
+var snowcolor=new Array("green","blue","red","aqua","black","lime","purple","maroon")
+
+// Set the fonts, that create the snowflakes. Add as many fonts as you like
+var snowtype=new Array("Georgia","Jokerman","Algerian","Elephant")
+
+// Set the letter that creates your snowflake (recommended:*)
+var snowletter="*"
+
+// Set the speed of sinking (recommended values range from 0.3 to 2)
+var sinkspeed=1.6
+
+// Set the maximal-size of your snowflaxes
+var snowmaxsize=16
+
+// Set the minimal-size of your snowflaxes
+var snowminsize=8
+
+// Set the snowing-zone
+// Set 1 for all-over-snowing, set 2 for left-side-snowing 
+// Set 3 for center-snowing, set 4 for right-side-snowing
+var snowingzone=1
+
+///////////////////////////////////////////////////////////////////////////
+// CONFIGURATION ENDS HERE
+///////////////////////////////////////////////////////////////////////////
+
+
+// Do not edit below this line
+var snow=new Array()
+var marginbottom
+var marginright
+var timer
+var i_snow=0
+var x_mv=new Array();
+var crds=new Array();
+var lftrght=new Array();
+var browserinfos=navigator.userAgent 
+var ie5=document.all&&document.getElementById&&!browserinfos.match(/Opera/)
+var ns6=document.getElementById&&!document.all
+var opera=browserinfos.match(/Opera/)  
+var browserok=ie5||ns6||opera
+
+function randommaker(range) {		
+	rand=Math.floor(range*Math.random())
+    return rand
+}
+
+function initsnow() {
+	if (ie5 || opera) {
+		marginbottom = document.body.clientHeight
+		marginright = document.body.clientWidth
+	}
+	else if (ns6) {
+		marginbottom = window.innerHeight
+		marginright = window.innerWidth
+	}
+	var snowsizerange=snowmaxsize-snowminsize
+	for (i=0;i<=snowmax;i++) {
+		crds[i] = 0;                      
+    	lftrght[i] = Math.random()*15;         
+    	x_mv[i] = 0.03 + Math.random()/10;
+		snow[i]=document.getElementById("s"+i)
+		snow[i].style.fontFamily=snowtype[randommaker(snowtype.length)]
+		snow[i].size=randommaker(snowsizerange)+snowminsize
+		snow[i].style.fontSize=snow[i].size
+		snow[i].style.color=snowcolor[randommaker(snowcolor.length)]
+		snow[i].sink=sinkspeed*snow[i].size/5
+		if (snowingzone==1) {snow[i].posx=randommaker(marginright-snow[i].size)}
+		if (snowingzone==2) {snow[i].posx=randommaker(marginright/2-snow[i].size)}
+		if (snowingzone==3) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/4}
+		if (snowingzone==4) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/2}
+		snow[i].posy=randommaker(2*marginbottom-marginbottom-2*snow[i].size)
+		snow[i].style.left=snow[i].posx
+		snow[i].style.top=snow[i].posy
+	}
+	movesnow()
+}
+
+function movesnow() {
+	for (i=0;i<=snowmax;i++) {
+		crds[i] += x_mv[i];
+		snow[i].posy+=snow[i].sink
+		snow[i].style.left=snow[i].posx+lftrght[i]*Math.sin(crds[i]);
+		snow[i].style.top=snow[i].posy
+		
+		if (snow[i].posy>=marginbottom-2*snow[i].size || parseInt(snow[i].style.left)>(marginright-3*lftrght[i])){
+			if (snowingzone==1) {snow[i].posx=randommaker(marginright-snow[i].size)}
+			if (snowingzone==2) {snow[i].posx=randommaker(marginright/2-snow[i].size)}
+			if (snowingzone==3) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/4}
+			if (snowingzone==4) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/2}
+			snow[i].posy=0
+		}
+	}
+	var timer=setTimeout("movesnow()",50)
+}
+
+for (i=0;i<=snowmax;i++) {
+	document.write("<span id='s"+i+"' style='position:absolute;top:-"+snowmaxsize+"'>"+snowletter+"</span>")
+}
+if (browserok) {
+	window.onload=initsnow
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<SCRIPT LANGUAGE="JavaScript">
+<!-- Begin
+var no = 50;
+var speed = 1;
+var ns4up = (document.layers) ? 1 : 0;
+var ie4up = (document.all) ? 1 : 0;
+var s, x, y, sn, cs;
+var a, r, cx, cy;
+var i, doc_width = 800, doc_height = 600;
+if (ns4up) {
+doc_width = self.innerWidth;
+doc_height = self.innerHeight;
+}
+else
+if (ie4up) {
+doc_width = document.body.clientWidth;
+doc_height = document.body.clientHeight;
+}
+x = new Array();
+y = new Array();
+r = new Array();
+cx = new Array();
+cy = new Array();
+s = 8;
+for (i = 0; i < no; ++ i) {
+initRain();
+if (ns4up) {
+if (i == 0) {
+document.write("<layer name=\"dot"+ i +"\" left=\"1\" ");
+document.write("top=\"1\" visibility=\"show\"><font color=\"blue\">");
+document.write(",</font></layer>");
+}
+else {
+document.write("<layer name=\"dot"+ i +"\" left=\"1\" ");
+document.write("top=\"1\" visibility=\"show\"><font color=\"blue\">");
+document.write(",</font></layer>");
+   }
+}
+else
+if (ie4up) {
+if (i == 0) {
+document.write("<div id=\"dot"+ i +"\" style=\"POSITION: ");
+document.write("absolute; Z-INDEX: "+ i +"; VISIBILITY: ");
+document.write("visible; TOP: 15px; LEFT: 15px;\"><font color=\"blue\">");
+document.write(",</font></div>");
+}
+else {
+document.write("<div id=\"dot"+ i +"\" style=\"POSITION: ");
+document.write("absolute; Z-INDEX: "+ i +"; VISIBILITY: ");
+document.write("visible; TOP: 15px; LEFT: 15px;\"><font color=\"blue\">");
+document.write(",</font></div>");
+      }
+   }
+}
+function initRain() {
+a = 6;
+r[i] = 1;
+sn = Math.sin(a);
+cs = Math.cos(a);
+cx[i] = Math.random() * doc_width + 1;
+cy[i] = Math.random() * doc_height + 1;
+x[i] = r[i] * sn + cx[i];
+y[i] = cy[i];
+}
+function makeRain() {
+r[i] = 1;
+cx[i] = Math.random() * doc_width + 1;
+cy[i] = 1;
+x[i] = r[i] * sn + cx[i];
+y[i] = r[i] * cs + cy[i];
+}
+function updateRain() {
+r[i] += s;
+x[i] = r[i] * sn + cx[i];
+y[i] = r[i] * cs + cy[i];
+}
+function raindropNS() {
+for (i = 0; i < no; ++ i) {
+updateRain();
+if ((x[i] <= 1) || (x[i] >= (doc_width - 20)) || (y[i] >= (doc_height - 20))) {
+makeRain();
+doc_width = self.innerWidth;
+doc_height = self.innerHeight;
+}
+document.layers["dot"+i].top = y[i];
+document.layers["dot"+i].left = x[i];
+}
+setTimeout("raindropNS()", speed);
+}
+function raindropIE() {
+for (i = 0; i < no; ++ i) {
+updateRain();
+if ((x[i] <= 1) || (x[i] >= (doc_width - 20)) || (y[i] >= (doc_height - 20))) {
+makeRain();
+doc_width = document.body.clientWidth;
+doc_height = document.body.clientHeight;
+}
+document.all["dot"+i].style.pixelTop = y[i];
+document.all["dot"+i].style.pixelLeft = x[i];
+}
+setTimeout("raindropIE()", speed);
+}
+if (ns4up) {
+raindropNS();
+}
+else
+if (ie4up) {
+raindropIE();
+}
+//  End -->
+</script>
+
+
+
+
+
+
+
+
+
+
+<CENTER>
+<FONT FACE = "algerian" SIZE = "48" COLOR = "BLUE">
+<B>
+CHAPTER  =>  7
+</B>
+</FONT>
+</CENTER>
+<BR / >
+<center>
+<FONT FACE = "ALGERIAN" SIZE = "20" COLOR = "BLUE">
+<B>
+       COMPUTER                         CRIMES
+
+</B>
+</FONT>
+</center>
+<BR / >
+<TABLE BORDER = "1"WIDTH = "100%" bordercolor = "red">
+<TR>
+<TD>
+<FONT FACE = "Goudy Old Style" COLOR = "yellow" SIZE = "8">
+<B>
+After you have studied this chapter , you will be able to :
+<br / >
+<ul type = "square">
+<li>Define computer viruses and anti - virus software</li>
+<li>Define software piracy and anti - piracy schemes</li>
+<li>Define hacking and how to prevent hacking</li>
+</ul>
+</b>
+</font>
+</td>
+</tr>
+</table>
+
+<BR / >
+<BR / >
+
+<FONT FACE = "Imprint MT Shadow" COLOR = "lime" SIZE = "6">
+<B>
+<u>COMPUTERS    IN    CRIME</u>
+</B>
+</FONT>
+<BR / >
+<br / >
+<FONT FACE = "Georgia" COLOR = "WHITE" SIZE = "5">
+Computers are used for all types of activities , including criminal activity.Ever since selling software online and 
+<br / >computer networking have begun , criminals have found new and differtnet ways to profit and exploit systems.
+<br / >The tpes of computer-related crimes are numerous and widespread . 
+<br / >But , however it is essential to be aware of at least some of them listed below : 
+<ul type = "disk">
+<li>Spreading computer viruses.</li>
+<li>Illegal coying of software(Software piracy).</li>
+<li>Stealing the hardware or data (Hacking).</li> 
+</ul>
+Although computer criminals can cause a great deal of harm to personal computer and smaller networks , 
+<br / >the Internet gives them a much larger access.
+</font>
+<br / >
+<br / >
+<FONT FACE = "Imprint MT Shadow" COLOR = "lime" SIZE = "6">
+<B>
+<u>COMPUTER    VIRUSES</u>
+</B>
+</FONT>
+<BR / >
+<BR / >
+<FONT FACE = "Georgia" COLOR = "WHITE" SIZE = "5">
+In general , a virus is a parasite program that infects another progeram called the host program.To infect the host
+<br / >program , the virus makes copies of itself to harm the host program , or prevent it from carrying out certain tasks.
+<br / >Some viruses are harmless and others,if allowed to run could pose a great threat or damage to the computer system.
+</font>
+<br / >
+<br / >
+<FONT FACE = "Imprint MT Shadow" COLOR = "lime" SIZE = "6">
+<B>
+<u><br / >HOW DOES A VIRUS SPREAD AND INFECT YOUR COMPUTER ? </u>
+</B>
+</FONT>
+<BR / ><BR / >
+<FONT FACE = "Georgia" COLOR = "WHITE" SIZE = "5">
+The most common mode of virus transfer is through infected flash drives , floppy disks and the internet . Some virus can
+<br / >infect the system if we boot (start our computer) with an infected disk.
+</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br / >
+<br / >
+<br / >
+<br / >
+
+
+
+
+
+
+
+
+
+<TABLE>
+<TR>
+<TD>
+<B>
+<FONT FACE = "BELL MT" SIZE = "8" COLOR = "YELLOW">
+GOTO PAGE -->>
+<CELLSPACING = "4" / >
+</FONT>
+<A HREF = "1.HTML" COLOR = "YELLOW">
+<FONT FACE = "Castellar" SIZE = "16" COLOR = "AQUA">
+1
+</FONT>
+</A>
+
+<CELLSPACING = "4" / >
+
+
+
+<A HREF = "3.HTML">
+<FONT FACE = "Castellar" SIZE = "16" COLOR = "lime">
+3
+</FONT>
+</A>
+
+<CELLSPACING = "4" / >
+
+<A HREF = "4.HTML">
+<FONT FACE = "Castellar" SIZE = "16" COLOR = "MAGNETA">
+4
+</FONT>
+</A>
+
+<CELLSPACING = "4" / >
+
+
+<A HREF = "5.HTML">
+<FONT FACE = "Castellar" SIZE = "16" COLOR = "AQUA">
+5
+</FONT>
+</A>
+
+<CELLSPACING = "4" / >
+
+<A HREF = "6.HTML">
+<FONT FACE = "Castellar" SIZE = "16" COLOR = "lime">
+6
+</FONT>
+</A>
+
+<CELLSPACING = "4" / >
+
+<A HREF = "7.HTML">
+<FONT FACE = "Castellar" SIZE = "16" COLOR = "MAGNETA">
+7
+</FONT>
+</A>
+
+<CELLSPACING = "4" / >
+
+<A HREF = "8.HTML">
+<FONT FACE = "Castellar" SIZE = "16" COLOR = "YELLOW">
+8
+</FONT>
+</A>
+<CELLPADDING = "20" / >
+<FONT FACE = "BELL MT" SIZE = "8" COLOR = "YELLOW">
+<<-- GOTO PAGE
+</FONT>
+</B>
+
+</TD>
+</TR>
+</TABLE>
+
+
+
+
+
+<CENTER>
+<FONT FACE = "ALGERIAN" SIZE = "8" COLOR = "RED">
+PAGE 2 OF 8
+</FONT>
+</CENTER>
+<center>
+<table>
+<tr>
+<td>
+
+<A HREF = "1.HTML">
+<FONT FACE = "ALGERIAN" SIZE = "8" COLOR = "RED" >
+< PREVIOUS
+</FONT>
+</A>
+
+<A HREF = "3.HTML" >
+<FONT FACE = "ALGERIAN" SIZE = "8" COLOR = "RED" >
+NEXT >
+</FONT>
+</A>
+</TD>
+</TR>
+</TABLE>
+</center>
+
+</BODY>
+</HTML>
